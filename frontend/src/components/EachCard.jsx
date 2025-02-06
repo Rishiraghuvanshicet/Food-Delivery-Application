@@ -5,12 +5,13 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { Box } from "@mui/material";
-import { addCart } from "../features/cartSlice";
-import { useDispatch } from "react-redux";
+import { addCart, selectCart } from "../features/cartSlice";
+import { useDispatch ,useSelector} from "react-redux";
 
 export default function EachCard({ item }) {
   const [quantity, setQuantity] = React.useState(1);
   const dispatch = useDispatch();
+  const cart = useSelector(selectCart);
 
   const handleQuantityChange = (event) => {
     const value = Math.max(1, parseInt(event.target.value) || 1);
@@ -18,16 +19,11 @@ export default function EachCard({ item }) {
   };
 
   const handleAddToCart = () => {
-    dispatch(
-      addCart({
-        id: item.id,
-        title: item.title,
-        time: item.time,
-        content: item.content,
-        shopOwner: item.shopOwner,
-        file: item.file,
-        quantity: quantity,
-      })
+      dispatch(
+    addCart({
+      item: { ...item },
+      quantity: quantity, 
+    })
     );
   };
 

@@ -1,4 +1,3 @@
-// In your cartSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -11,13 +10,18 @@ const cartSlice = createSlice({
   reducers: {
     addCart: (state, action) => {
       const { item, quantity } = action.payload;
-      const newItem = { ...item, quantity };
-      state.cart.push(newItem);
+      const isExisting = state.cart.find((product) => product._id === item._id);
+      
+      if (isExisting) {
+        alert("Item already added to cart");
+      } else {
+        const newItem = { ...item, quantity };
+        state.cart.push(newItem);
+      }
     },
     removeCart: (state, action) => {
-      state.cart = state.cart.filter(
-        (product) => product.id !== action.payload.id
-      );
+      // Use _id to remove the correct item from the cart
+      state.cart = state.cart.filter((product) => product._id !== action.payload._id);
     },
   },
 });

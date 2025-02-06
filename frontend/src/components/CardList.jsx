@@ -37,9 +37,9 @@ const CardList = ({ filterItem }) => {
       }}
     >
       {filteredData.length > 0 ? (
-        filteredData.map((item, index) => (
-          <Box key={index}>
-            <EachCard item={item} />
+        filteredData.map((item, id) => (
+          <Box key={id}>
+            <EachCard item={item}  />
           </Box>
         ))
       ) : (
